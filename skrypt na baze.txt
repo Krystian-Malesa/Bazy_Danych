@@ -1,0 +1,137 @@
+CREATE TYPE PhoneNumber AS (
+    Kierunkowy INT,
+    Numer INT,
+);
+
+CREATE TABLE Autor (
+    IdAutor INT PRIMARY KEY NOT NULL,
+    Imie VARCHAR(50) NOT NULL,
+    Nazwisko VARCHAR(50) NOT NULL,
+    Pseudonim VARCHAR(50)
+);
+
+CREATE TABLE Recenzja (
+    IdRecenzja INT PRIMARY KEY NOT NULL,
+    Ocena INT NOT NULL,
+    Tresc VARCHAR(50),
+    UserName VARCHAR(100),
+    Ukryj VARCHAR(50)
+);
+
+CREATE TABLE Uzytkownicy(
+    IdUzytkownika INT PRIMARY KEY NOT NULL,
+    Status VARCHAR(50),
+    Login VARCHAR(200),
+    Imie VARCHAR(50) NOT NULL,
+    Nazwisko VARCHAR(100) NOT NULL,
+    Typ VARCHAR(100),
+    IndexPW INT,
+    Wypozyczenie TEXT,
+    SMS TEXT
+    Telefon PhoneNumber
+);
+
+CREATE TABLE Gatunek(
+    IdGatunku INT PRIMARY KEY NOT NULL,
+    PokazUkryj VARCHAR(50)
+);
+
+
+CREATE TABLE Wydawnictwo (
+    IdWydawnictwo INT PRIMARY KEY NOT NULL,
+    Nazwa VARCHAR(100)
+);
+
+CREATE TABLE Notyfikacja(
+    IdNotyfikacja INT PRIMARY KEY NOT NULL,
+    IdPrzedluzenia INT,
+    Tresc TEXT,
+    TYP VARCHAR(100),
+    IdUzytkownika INT,
+    FOREIGN KEY (IdUzytkownika) REFERENCES Uzytkownicy(IdUzytkownika)
+);
+
+CREATE TABLE Zamowienie(
+    IdZamowienia INT PRIMARY KEY NOT NULL,
+    IdEgzempalrz INT NOT NULL,
+    IdUzytkownika INT NOT NULL,
+    Wypozyczenie VARCHAR(50),
+    CzasOdbioru VARCHAR(20),
+    Data DATE,
+    FOREIGN KEY (IdUzytkownika) REFERENCES Uzytkownicy(IdUzytkownika),
+    FOREIGN KEY (IdEgzemplarz) REFERENCES Egzemplarz(IdEgzemplarz)
+);
+
+CREATE TABLE Przedluzenie(
+    IdPrzedluzenia INT PRIMARY KEY NOT NULL,
+    IdWypozyzenia INT NOT NULL,
+    Typ VARCHAR(50),
+    CzasPrzedluzenia VARCHAR(50),
+    FOREIGN KEY (IdPrzedluzenia) REFERENCES Przedluzenie(IdPrzedluzenia)
+);
+
+CREATE TABLE Wypozyczenie(
+    IdWypozyczenia INT PRIMARY KEY NOT NULL,
+    IdZamowienia INT,
+    IdEgzemplarz INT,
+    DzienWypozyczenia INT,
+    CzasWypozyczenia VARCHAR(50),
+    DataZwrotu VARCHAR(25),
+    FOREIGN KEY (IdWypozyczenia) REFERENCES Przedluzenie(IdWypozyczenia)
+);
+
+
+CREATE TABLE Egzemplarz(
+    IdEgzemplarz INT PRIMARY KEY NOT NULL,
+    IdKsiazki INT,
+    IdBiblioteka INT,
+    Status VARCHAR(50),
+    Zuzycie INT,
+    FOREIGN KEY (IdBiblioteka) REFERENCES Biblioteka(IdBiblioteka),
+    FOREIGN KEY (IdKsiazki) REFERENCES Ksiazka(IdKsiazka),
+    FOREIGN KEY (IdEgzemplarz) REFERENCES Wypozyczenie(IdEgzemplarz) 
+);
+
+CREATE TABLE GodzinyOtwarcia(
+    IdGodzinyOtwarcia INT PRIMARY KEY NOT NULL,
+    IdBiblioteka INT NOT NULL,
+    DzienTygodnia VARCHAR(30),
+    Godziny TIME,
+    STATUS VARCHAR(50)
+    FOREIGN KEY (IdBiblioteka) REFERENCES Biblioteka(IdBiblioteka)
+);
+
+CREATE TABLE Lokalizacja(
+    IdLokalizacja INT PRIMARY KEY NOT NULL,
+    Miasto VARCHAR(100),
+    Ulica VARCHAR(100),
+    KodPocztowy VARCHAR(10),
+    Wojewodztwo VARCHAR(100)
+);
+
+
+CREATE TABLE Biblioteka(
+    IdBiblioteka INT PRIMARY KEY NOT NULL,
+    IdLokalizacja INT,
+    IdGodzinyOtwarcia INT,
+    FOREIGN KEY (IdLokalizacja) REFERENCES Lokalizacja(IdLokalizacja),
+    FOREIGN KEY (IdGodzinyOtwarcia) REFERENCES GodzinyOtwarcia(IdGodzinyOtwarcia),
+);
+
+
+
+CREATE TABLE Ksiazka (
+    IdKsiazka INT PRIMARY KEY NOT NULL,
+    IdAutor INT NOT NULL,
+    IdGatunku INT NOT NULL,
+    Opis TEXT,
+    IdRecenzja INT,
+    RokWydania INT,
+    IdWydawnictwo INT,
+    status VARCHAR(20),
+    IdMagazyn INT,
+    FOREIGN KEY (IdAutor) REFERENCES Autor(IdAutor),
+    FOREIGN KEY (IdRecenzja) REFERENCES Recenzja(IdRecenzja),
+    FOREIGN KEY (IdWydawnictwo) REFERENCES Wydawnictwo(IdWydawnictwo),
+    FOREIGN KEY (IdGatunku) REFERENCES Gatunek(IdGatunku) 
+);
