@@ -13,18 +13,18 @@ CREATE TABLE Autor (
 CREATE TABLE Recenzja (
     IdRecenzja INT PRIMARY KEY NOT NULL,
     Ocena INT NOT NULL,
-    Tresc VARCHAR(50),
+    Tresc VARCHAR(250),
     UserName VARCHAR(100),
-    Ukryj VARCHAR(50)
+    Ukryj BOOLEAN
 );
 
 CREATE TABLE Uzytkownicy(
     IdUzytkownika INT PRIMARY KEY NOT NULL,
     Status VARCHAR(50),
-    Login VARCHAR(200),
+    Login VARCHAR(100),
     Imie VARCHAR(50) NOT NULL,
     Nazwisko VARCHAR(100) NOT NULL,
-    Typ VARCHAR(100),
+    Typ VARCHAR(30),
     IndexPW INT,
     Wypozyczenie TEXT,
     SMS TEXT
@@ -46,7 +46,7 @@ CREATE TABLE Notyfikacja(
     IdNotyfikacja INT PRIMARY KEY NOT NULL,
     IdPrzedluzenia INT,
     Tresc TEXT,
-    TYP VARCHAR(100),
+    TYP VARCHAR(30),
     IdUzytkownika INT,
     FOREIGN KEY (IdUzytkownika) REFERENCES Uzytkownicy(IdUzytkownika)
 );
@@ -65,7 +65,7 @@ CREATE TABLE Zamowienie(
 CREATE TABLE Przedluzenie(
     IdPrzedluzenia INT PRIMARY KEY NOT NULL,
     IdWypozyzenia INT NOT NULL,
-    Typ VARCHAR(50),
+    Typ VARCHAR(30),
     CzasPrzedluzenia VARCHAR(50),
     FOREIGN KEY (IdPrzedluzenia) REFERENCES Przedluzenie(IdPrzedluzenia)
 );
