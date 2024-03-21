@@ -1,6 +1,7 @@
 CREATE TYPE PhoneNumber AS (
-    Kierunkowy INT,
-    Numer INT,
+    kodKraju INT,
+    kodKierunkowy INT,
+    numer VARCHAR(20)
 );
 
 CREATE TABLE Autor (
