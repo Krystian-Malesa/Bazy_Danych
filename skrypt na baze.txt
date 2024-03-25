@@ -27,6 +27,7 @@ CREATE TABLE Uzytkownicy(
     Nazwisko VARCHAR(30) NOT NULL,
     haslo VARCHAR(256) NOT NULL,
     Typ VARCHAR(30),
+    email VARCHAR(256) NOT NULL,
     IndexPW INT,
     Wypozyczenie TEXT,
     SMS TEXT
