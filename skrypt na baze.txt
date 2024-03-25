@@ -5,14 +5,14 @@ CREATE TYPE PhoneNumber AS (
 );
 
 CREATE TABLE Autor (
-    IdAutor INT PRIMARY KEY NOT NULL,
+    IdAutor INT PRIMARY KEY IDENTITY(1,1),
     Imie VARCHAR(50) NOT NULL,
     Nazwisko VARCHAR(50) NOT NULL,
     Pseudonim VARCHAR(50)
 );
 
 CREATE TABLE Recenzja (
-    IdRecenzja INT PRIMARY KEY NOT NULL,
+    IdRecenzja INT PRIMARY KEY IDENTITY(1,1),
     Ocena INT NOT NULL,
     Tresc VARCHAR(250),
     UserName VARCHAR(100),
@@ -20,11 +20,12 @@ CREATE TABLE Recenzja (
 );
 
 CREATE TABLE Uzytkownicy(
-    IdUzytkownika INT PRIMARY KEY NOT NULL,
+    IdUzytkownika INT PRIMARY KEY IDENTITY(1,1),
     Status VARCHAR(50),
-    Login VARCHAR(100),
+    Login VARCHAR(20),
     Imie VARCHAR(50) NOT NULL,
-    Nazwisko VARCHAR(100) NOT NULL,
+    Nazwisko VARCHAR(30) NOT NULL,
+    haslo VARCHAR(256) NOT NULL,
     Typ VARCHAR(30),
     IndexPW INT,
     Wypozyczenie TEXT,
@@ -33,18 +34,18 @@ CREATE TABLE Uzytkownicy(
 );
 
 CREATE TABLE Gatunek(
-    IdGatunku INT PRIMARY KEY NOT NULL,
+    IdGatunku INT PRIMARY KEY IDENTITY(1,1),
     PokazUkryj VARCHAR(50)
 );
 
 
 CREATE TABLE Wydawnictwo (
-    IdWydawnictwo INT PRIMARY KEY NOT NULL,
+    IdWydawnictwo INT PRIMARY KEY IDENTITY(1,1),
     Nazwa VARCHAR(100)
 );
 
 CREATE TABLE Notyfikacja(
-    IdNotyfikacja INT PRIMARY KEY NOT NULL,
+    IdNotyfikacja INT PRIMARY KEY IDENTITY(1,1),
     IdPrzedluzenia INT,
     Tresc TEXT,
     TYP VARCHAR(30),
@@ -53,7 +54,7 @@ CREATE TABLE Notyfikacja(
 );
 
 CREATE TABLE Zamowienie(
-    IdZamowienia INT PRIMARY KEY NOT NULL,
+    IdZamowienia INT PRIMARY KEY IDENTITY(1,1),
     IdEgzempalrz INT NOT NULL,
     IdUzytkownika INT NOT NULL,
     Wypozyczenie VARCHAR(50),
@@ -64,7 +65,7 @@ CREATE TABLE Zamowienie(
 );
 
 CREATE TABLE Przedluzenie(
-    IdPrzedluzenia INT PRIMARY KEY NOT NULL,
+    IdPrzedluzenia INT PRIMARY KEY IDENTITY(1,1),
     IdWypozyzenia INT NOT NULL,
     Typ VARCHAR(30),
     CzasPrzedluzenia VARCHAR(50),
@@ -72,7 +73,7 @@ CREATE TABLE Przedluzenie(
 );
 
 CREATE TABLE Wypozyczenie(
-    IdWypozyczenia INT PRIMARY KEY NOT NULL,
+    IdWypozyczenia INT PRIMARY KEY IDENTITY(1,1),
     IdZamowienia INT,
     IdEgzemplarz INT,
     DzienWypozyczenia INT,
@@ -83,7 +84,7 @@ CREATE TABLE Wypozyczenie(
 
 
 CREATE TABLE Egzemplarz(
-    IdEgzemplarz INT PRIMARY KEY NOT NULL,
+    IdEgzemplarz INT PRIMARY KEY IDENTITY(1,1),
     IdKsiazki INT,
     IdBiblioteka INT,
     Status VARCHAR(50),
@@ -94,7 +95,7 @@ CREATE TABLE Egzemplarz(
 );
 
 CREATE TABLE GodzinyOtwarcia(
-    IdGodzinyOtwarcia INT PRIMARY KEY NOT NULL,
+    IdGodzinyOtwarcia INT PRIMARY KEY IDENTITY(1,1),
     IdBiblioteka INT NOT NULL,
     DzienTygodnia VARCHAR(30),
     Godziny TIME,
@@ -103,7 +104,7 @@ CREATE TABLE GodzinyOtwarcia(
 );
 
 CREATE TABLE Lokalizacja(
-    IdLokalizacja INT PRIMARY KEY NOT NULL,
+    IdLokalizacja INT PRIMARY KEY IDENTITY(1,1),
     Miasto VARCHAR(100),
     Ulica VARCHAR(100),
     KodPocztowy VARCHAR(10),
@@ -112,7 +113,7 @@ CREATE TABLE Lokalizacja(
 
 
 CREATE TABLE Biblioteka(
-    IdBiblioteka INT PRIMARY KEY NOT NULL,
+    IdBiblioteka INT PRIMARY KEY IDENTITY(1,1),
     IdLokalizacja INT,
     IdGodzinyOtwarcia INT,
     FOREIGN KEY (IdLokalizacja) REFERENCES Lokalizacja(IdLokalizacja),
@@ -122,7 +123,7 @@ CREATE TABLE Biblioteka(
 
 
 CREATE TABLE Ksiazka (
-    IdKsiazka INT PRIMARY KEY NOT NULL,
+    IdKsiazka INT PRIMARY KEY IDENTITY(1,1),
     IdAutor INT NOT NULL,
     IdGatunku INT NOT NULL,
     Opis TEXT,
