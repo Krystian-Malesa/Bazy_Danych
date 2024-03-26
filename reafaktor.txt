@@ -1,0 +1,31 @@
+- snake case w nazwach zmiennych
+- Password vrachar(100)
+
+SELECT t.name, c.name as 'name tables'
+FROM sys.columns c, sys.tables as t where t.object_id = c.object_id
+
+
+SET IDENTITY_INSERT Authors ON
+INSERT INTO Authors (Author_ID,Surename, Name, username) VALUES
+(1, 'Stephen', 'King', 'Zefir'),
+(2, 'J.K.', 'Rowling', 'Kowal'),
+(3, 'Agatha', 'Christie', 'Chlop'),
+(4, 'George', 'Orwell', 'Sdfzxv'),
+(5, 'Ernest', 'Hemingway', 'Chlfas'),
+(6, 'Jane', 'Austen', 'Adjfu'),
+(7, 'Fyodor', 'Dostoevsky', 'Afdvg'),
+(8, 'Leo', 'Tolstoy', 'Fytwas'),
+(9, 'Harper', 'Lee', 'Sdda'),
+(10,'Mark', 'Twain', 'Sdgaew');
+SET IDENTITY_INSERT Authors OFF
+
+
+-- zmiana nazwy kolumny
+EXEC sp_rename 'Authors.username', 'username_old', 'COLUMN';
+-- zmiana typu kolumny
+ALTER TABLE Authors
+ALTER COLUMN username_old VARCHAR(100);
+
+
+
+DODAJ DANE DO TABELI 
