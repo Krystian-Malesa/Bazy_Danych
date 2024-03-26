@@ -1,3 +1,10 @@
+CREATE DATABASE LibraryPW
+GO
+
+use LibraryPW;
+GO
+
+
 CREATE TYPE PhoneNumber AS (
     kodKraju INT,
     kodKierunkowy INT,
