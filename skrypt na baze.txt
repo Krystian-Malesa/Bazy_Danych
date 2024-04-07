@@ -40,7 +40,7 @@ Hide int,
 CREATE TABLE Providers(
 Provider_ID int primary key IDENTITY (1,1),
 Company_name varchar(50),
-Adres varchar(255),
+Address varchar(255),
 Phone_number Phone_number,
 );
 
