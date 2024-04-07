@@ -1,390 +1,218 @@
-INSERT INTO Autor (IdAutor, Imie, Nazwisko, Pseudonim) VALUES
-(1, 'Stephen', 'King', NULL),
-(2, 'J.K.', 'Rowling', NULL),
-(3, 'Agatha', 'Christie', NULL),
-(4, 'George', 'Orwell', NULL),
-(5, 'Ernest', 'Hemingway', NULL),
-(6, 'Jane', 'Austen', NULL),
-(7, 'Fyodor', 'Dostoevsky', NULL),
-(8, 'Leo', 'Tolstoy', NULL),
-(9, 'Harper', 'Lee', NULL),
-(10, 'Mark', 'Twain', NULL),
-(11, 'J.R.R.', 'Tolkien', NULL),
-(12, 'Charles', 'Dickens', NULL),
-(13, 'Virginia', 'Woolf', NULL),
-(14, 'F. Scott', 'Fitzgerald', NULL),
-(15, 'Gabriel', 'García Márquez', NULL),
-(16, 'Miguel de', 'Cervantes', NULL),
-(17, 'Herman', 'Melville', NULL),
-(18, 'Franz', 'Kafka', NULL),
-(19, 'Toni', 'Morrison', NULL),
-(20, 'Oscar', 'Wilde', NULL),
-(21, 'Emily', 'Brontë', NULL),
-(22, 'Charlotte', 'Brontë', NULL),
-(23, 'James', 'Joyce', NULL),
-(24, 'Albert', 'Camus', NULL),
-(25, 'Joseph', 'Conrad', NULL),
-(26, 'H.G.', 'Wells', NULL),
-(27, 'Daphne', 'du Maurier', NULL),
-(28, 'Emily', 'Dickinson', NULL),
-(29, 'John', 'Steinbeck', NULL),
-(30, 'Homer', '', NULL);
-
-
-
-INSERT INTO Recenzja (IdRecenzja, Ocena, Tresc, UserName, Ukryj) VALUES
-(1, 4, 'Znakomita książka, polecam!', 'booklover123', false),
-(2, 5, 'Genialne arcydzieło literatury.', 'literaturefanatic', false),
-(3, 3, 'Słaba fabuła, nie polecam.', 'disappointedreader', false),
-(4, 5, 'Fascynująca historia, bardzo wciągająca.', 'avidreader', false),
-(5, 4, 'Książka godna polecenia dla każdego.', 'bookworm', false),
-(6, 2, 'Nie spełniła moich oczekiwań.', 'notimpressed', false),
-(7, 5, 'Wspaniała lektura, zdecydowanie na mojej liście ulubionych książek.', 'booklover22', false),
-(8, 4, 'Ciekawa i zaskakująca.', 'surprisedreader', false),
-(9, 3, 'Przeciętna, nic specjalnego.', 'averagejoe', false),
-(10, 5, 'Książka, którą przeczytam jeszcze raz!', 'reader1234', false),
-(11, 1, 'Nie warto tracić czasu na tę książkę.', 'wasteoftime', false),
-(12, 5, 'Zachwycająca, nie mogłem odłożyć.', 'captivatedreader', false),
-(13, 4, 'Dobrze napisana i wciągająca.', 'hookedonbooks', false),
-(14, 2, 'Męcząca i nieciekawa.', 'boredreader', false),
-(15, 5, 'Świetnie skonstruowany świat, pełen niespodzianek.', 'imaginativereader', false),
-(16, 3, 'Poprawna, ale niezbyt porywająca.', 'casualreader', false),
-(17, 5, 'Wciągająca od pierwszej do ostatniej strony.', 'bookaddict', false),
-(18, 4, 'Ciekawa fabuła i interesujące postaci.', 'curiousreader', false),
-(19, 1, 'Nieprzekonująca i nudna.', 'boringbook', false),
-(20, 5, 'Nie mogłem się oderwać, czytałem do późna.', 'latenightreader', false),
-(21, 3, 'Mogłoby być lepiej.', 'couldbebetter', false),
-(22, 4, 'Znakomita książka, świetnie się czyta.', 'pageturner', false),
-(23, 2, 'Zdecydowanie nie dla mnie.', 'notforme', false),
-(24, 5, 'Absolutnie znakomita, polecam każdemu.', 'recommendit', false),
-(25, 4, 'Interesująca i mądra.', 'wisebookworm', false),
-(26, 3, 'Poprawna, ale nie zachwyciła.', 'so-so', false),
-(27, 5, 'Jedna z najlepszych książek, jakie czytałem.', 'bestbook', false),
-(28, 4, 'Godna polecenia, warto przeczytać.', 'bookrecommendation', false),
-(29, 2, 'Nuda, nie polecam.', 'dontbother', false),
-(30, 5, 'Wyjątkowa, przejmująca, niezapomniana.', 'unforgettable', false);
-
-
-
-
-INSERT INTO Gatunek (IdGatunku, PokazUkryj) VALUES
-(1, 'Fantastyka'),
-(2, 'Kryminał'),
-(3, 'Dramat'),
-(4, 'Romans'),
-(5, 'Literatura Faktu'),
-(6, 'Science Fiction'),
-(7, 'Thriller'),
-(8, 'Horror'),
-(9, 'Biografia'),
-(10, 'Literatura Dziecięca');
-
-
-
-
-
-INSERT INTO Wydawnictwo (IdWydawnictwo, Nazwa) VALUES
-(1, 'Wydawnictwo A'),
-(2, 'Wydawnictwo B'),
-(3, 'Wydawnictwo C'),
-(4, 'Wydawnictwo D'),
-(5, 'Wydawnictwo E'),
-(6, 'Wydawnictwo F'),
-(7, 'Wydawnictwo G'),
-(8, 'Wydawnictwo H'),
-(9, 'Wydawnictwo I'),
-(10, 'Wydawnictwo J');
-
-
-
-
-
-
-INSERT INTO Uzytkownicy (IdUzytkownika, Status, Login, Imie, Nazwisko, Typ, IndexPW, Wypozyczenie, SMS, Telefon) VALUES
-(1, 'Aktywny', 'user1', 'Jan', 'Kowalski', 'Standard', 12345, NULL, 'Witaj! Zapisz się na nasz newsletter!', (48, 123, '123456789')),
-(2, 'Aktywny', 'user2', 'Anna', 'Nowak', 'Premium', 67890, NULL, 'Specjalna oferta: darmowe wypożyczenia przez miesiąc!', (48, 456, '987654321')),
-(3, 'Zablokowany', 'user3', 'Piotr', 'Wiśniewski', 'Standard', 13579, NULL, 'Twoje konto zostało zablokowane.', (48, 789, '456123789')),
-(4, 'Aktywny', 'user4', 'Maria', 'Lewandowska', 'Standard', 24680, NULL, 'Zapraszamy na nasze wydarzenie literackie!', (48, 987, '789456123')),
-(5, 'Aktywny', 'user5', 'Paweł', 'Duda', 'Standard', 10111, NULL, 'Nowości książkowe już dostępne!', (48, 111, '321654987')),
-(6, 'Aktywny', 'user6', 'Katarzyna', 'Wójcik', 'Standard', 12121, NULL, 'Sprawdź nasze promocje na bestsellery!', (48, 222, '654987321')),
-(7, 'Zablokowany', 'user7', 'Andrzej', 'Kowalczyk', 'Standard', 13131, NULL, 'Twoje konto zostało zablokowane.', (48, 333, '147258369')),
-(8, 'Aktywny', 'user8', 'Magdalena', 'Dąbrowska', 'Premium', 14141, NULL, 'Nowa książka od ulubionego autora już dostępna!', (48, 444, '369258147')),
-(9, 'Aktywny', 'user9', 'Tomasz', 'Kamiński', 'Standard', 15151, NULL, 'Zapraszamy na nasze autorskie spotkanie.', (48, 555, '258369147')),
-(10, 'Aktywny', 'user10', 'Karolina', 'Zielińska', 'Standard', 16161, NULL, 'Sprawdź nasze nowości wydawnicze!', (48, 666, '147369258')),
-(11, 'Zablokowany', 'user11', 'Piotr', 'Adamczyk', 'Standard', 17171, NULL, 'Twoje konto zostało zablokowane.', (48, 777, '963852741')),
-(12, 'Aktywny', 'user12', 'Aleksandra', 'Woźniak', 'Standard', 18181, NULL, 'Promocja na ebooki - 50% rabatu!', (48, 888, '852741963')),
-(13, 'Aktywny', 'user13', 'Robert', 'Jabłoński', 'Premium', 19191, NULL, 'Polecamy książki dla pasjonatów historii.', (48, 999, '741852963')),
-(14, 'Aktywny', 'user14', 'Alicja', 'Szczepańska', 'Standard', 20202, NULL, 'Nowe gatunki literackie na półkach!', (48, 111, '654123789')),
-(15, 'Aktywny', 'user15', 'Marek', 'Olszewski', 'Standard', 21212, NULL, 'Zapraszamy na nasze konkursy literackie!', (48, 222, '987654321')),
-(16, 'Aktywny', 'user16', 'Elżbieta', 'Pawlak', 'Standard', 22222, NULL, 'Nowości książkowe już w sprzedaży!', (48, 333, '123456789')),
-(17, 'Zablokowany', 'user17', 'Krzysztof', 'Dudek', 'Standard', 23232, NULL, 'Twoje konto zostało zablokowane.', (48, 444, '789456123')),
-(18, 'Aktywny', 'user18', 'Monika', 'Witkowska', 'Premium', 24242, NULL, 'Promocja na audiobooki - kup jeden, drugi gratis!', (48, 555, '321654987')),
-(19, 'Aktywny', 'user19', 'Piotr', 'Walczak', 'Standard', 25252, NULL, 'Zapraszamy na nasze autorskie spotkania.', (48, 666, '987321654')),
-(20, 'Aktywny', 'user20', 'Agnieszka', 'Krawczyk', 'Standard', 26262, NULL, 'Nowości wydawnicze - już dostępne!', (48, 777, '654987321')),
-(21, 'Zablokowany', 'user21', 'Daniel', 'Sikora', 'Standard', 27272, NULL, 'Twoje konto zostało zablokowane.', (48, 888, '321654987')),
-(22, 'Aktywny', 'user22', 'Anna', 'Baran', 'Standard', 28282, NULL, 'Sprawdź nasze promocje na bestsellery!', (48, 999, '987654321')),
-(23, 'Aktywny', 'user23', 'Mariusz', 'Zając', 'Premium', 29292, NULL, 'Nowe gatunki literackie - polecamy!', (48, 111, '123456789')),
-(24, 'Aktywny', 'user24', 'Kinga', 'Mazur', 'Standard', 30303, NULL, 'Nowości książkowe już w sprzedaży!', (48, 222, '987654123')),
-(25, 'Aktywny', 'user25', 'Damian', 'Wójcik', 'Standard', 31313, NULL, 'Promocja na ebooki - 50% rabatu!', (48, 333, '987612323')),
-(26, 'Aktywny', 'user26', 'Kamil', 'Kaczmarek', 'Standard', 32323, NULL, 'Nowe książki dla pasjonatów literatury.', (48, 444, '789654321')),
-(27, 'Aktywny', 'user27', 'Martyna', 'Lipińska', 'Standard', 33333, NULL, 'Zapraszamy na nasze autorskie spotkania.', (48, 555, '123987654')),
-(28, 'Zablokowany', 'user28', 'Rafał', 'Grabowski', 'Standard', 34343, NULL, 'Twoje konto zostało zablokowane.', (48, 666, '987321654')),
-(29, 'Aktywny', 'user29', 'Sylwia', 'Piotrowska', 'Standard', 35353, NULL, 'Nowości wydawnicze - sprawdź!', (48, 777, '456123789')),
-(30, 'Aktywny', 'user30', 'Artur', 'Zalewski', 'Premium', 36363, NULL, 'Promocja na audiobooki - kup teraz!', (48, 888, '654789321'));
-
-
-
-
-
-
-INSERT INTO Ksiazka (IdKsiazka, IdAutor, IdGatunku, Opis, IdRecenzja, RokWydania, IdWydawnictwo, status, IdMagazyn) VALUES
-(1, 1, 8, 'Powieść dystopijna o totalitarnej rzeczywistości.', 1, 1949, 1, 'Dostępna', 1),
-(2, 2, 1, 'Fantastyczne przygody młodego czarodzieja.', 2, 1997, 1, 'Dostępna', 1),
-(3, 3, 2, 'Intrygujący kryminał z detektywem Poirotem.', 3, 1920, 2, 'Dostępna', 1),
-(4, 4, 3, 'Przerażająca wizja totalitaryzmu.', 4, 1949, 1, 'Dostępna', 2),
-(5, 5, 3, 'Historia weterana I wojny światowej.', 5, 1929, 2, 'Dostępna', 2),
-(6, 6, 4, 'Klasyczna historia miłosna.', 6, 1813, 2, 'Dostępna', 2),
-(7, 7, 3, 'Psychologiczny portret zbrodniarza.', 7, 1866, 3, 'Dostępna', 3),
-(8, 8, 3, 'Wielkie dzieło literackie, epopeja o wojnie.', 8, 1869, 3, 'Dostępna', 3),
-(9, 9, 2, 'Historia walki z rasizmem w Ameryce.', 9, 1960, 4, 'Dostępna', 3),
-(10, 10, 10, 'Przygody chłopca na Dzikim Zachodzie.', 10, 1876, 5, 'Dostępna', 3),
-(11, 11, 1, 'Fantastyczne opowieści o Śródziemiu.', 11, 1954, 6, 'Dostępna', 4),
-(12, 12, 3, 'Klasyczna opowieść o życiu w XIX wieku.', 12, 1861, 2, 'Dostępna', 4),
-(13, 13, 4, 'Eksperymentalna powieść z narratorem wewnętrznym.', 13, 1927, 2, 'Dostępna', 4),
-(14, 14, 4, 'Opowieść o dekadencji w latach 20.', 14, 1925, 3, 'Dostępna', 5),
-(15, 15, 1, 'Realistyczny obraz karaibskiego miasteczka.', 15, 1967, 4, 'Dostępna', 5),
-(16, 16, 1, 'Historia chłopca marzyciela.', 16, 1605, 5, 'Dostępna', 5),
-(17, 17, 1, 'Opowieść o kapitanie Ahabie i jego obsesji.', 17, 1851, 6, 'Dostępna', 6),
-(18, 18, 7, 'Przekład dzieł mistrza absurdu.', 18, 1925, 6, 'Dostępna', 6),
-(19, 19, 4, 'Historia o niewolnictwie i wolności.', 19, 1987, 3, 'Dostępna', 6),
-(20, 20, 8, 'Satyra na społeczeństwo wiktoriańskie.', 20, 1895, 4, 'Dostępna', 7),
-(21, 21, 4, 'Historia miłości i nienawiści na wietrznej wysepce.', 21, 1847, 2, 'Dostępna', 7),
-(22, 22, 1, 'Nowatorska opowieść o kilkudziesięcioletnim Dublinie.', 22, 1922, 2, 'Dostępna', 7),
-(23, 23, 8, 'Przekład dzieł francuskiego filozofa.', 23, 1912, 3, 'Dostępna', 7),
-(24, 25, 7, 'Historia buntu na statku pirackim.', 25, 1883, 4, 'Dostępna', 8),
-(25, 26, 6, 'Klasyka science fiction.', 26, 1895, 5, 'Dostępna', 8),
-(26, 27, 8, 'Suspens psychologiczny.', 27, 1938, 4, 'Dostępna', 9),
-(27, 28, 1, 'Klasyczne wiersze amerykańskiej poetki.', 28, 1830, 1, 'Dostępna', 9),
-(28, 29, 7, 'Realistyczna opowieść o biedzie w okresie wielkiego kryzysu.', 29, 1939, 5, 'Dostępna', 9),
-(29, 30, 1, 'Epos o greckim herosie.', 30, -800, 6, 'Dostępna', 10),
-(30, NULL, 1, 'Starożytny epos grecki.', NULL, -800, 7, 'Dostępna', 10);
-
-
-
-
-
-INSERT INTO Egzemplarz (IdEgzemplarz, IdKsiazki, IdBiblioteka, Status, Zuzycie) VALUES
-(1, 1, 1, 'Dostępna', 0),
-(2, 2, 1, 'Dostępna', 0),
-(3, 3, 1, 'Dostępna', 0),
-(4, 4, 2, 'Dostępna', 0),
-(5, 5, 2, 'Dostępna', 0),
-(6, 6, 2, 'Dostępna', 0),
-(7, 7, 3, 'Dostępna', 0),
-(8, 8, 3, 'Dostępna', 0),
-(9, 9, 3, 'Dostępna', 0),
-(10, 10, 3, 'Dostępna', 0),
-(11, 11, 4, 'Dostępna', 0),
-(12, 12, 4, 'Dostępna', 0),
-(13, 13, 4, 'Dostępna', 0),
-(14, 14, 5, 'Dostępna', 0),
-(15, 15, 5, 'Dostępna', 0),
-(16, 16, 5, 'Dostępna', 0),
-(17, 17, 6, 'Dostępna', 0),
-(18, 18, 6, 'Dostępna', 0),
-(19, 19, 6, 'Dostępna', 0),
-(20, 20, 7, 'Dostępna', 0),
-(21, 21, 7, 'Dostępna', 0),
-(22, 22, 7, 'Dostępna', 0),
-(23, 23, 8, 'Dostępna', 0),
-(24, 24, 8, 'Dostępna', 0),
-(25, 25, 8, 'Dostępna', 0),
-(26, 26, 9, 'Dostępna', 0),
-(27, 27, 9, 'Dostępna', 0),
-(28, 28, 9, 'Dostępna', 0),
-(29, 29, 10, 'Dostępna', 0),
-(30, 30, 10, 'Dostępna', 0);
-
-
-
-
-
-INSERT INTO Zamowienie (IdZamowienia, IdEgzemplarz, IdUzytkownika, Wypozyczenie, CzasOdbioru, Data) VALUES
-(2, 2, 2, 'Wypożyczenie', '10:00', '2024-03-21'),
-(3, 3, 3, 'Wypożyczenie', '14:30', '2024-03-22'),
-(4, 4, 4, 'Wypożyczenie', '16:00', '2024-03-22'),
-(5, 5, 5, 'Wypożyczenie', '11:00', '2024-03-23'),
-(6, 6, 6, 'Wypożyczenie', '13:45', '2024-03-23'),
-(7, 7, 7, 'Wypożyczenie', '09:30', '2024-03-24'),
-(8, 8, 8, 'Wypożyczenie', '10:20', '2024-03-24'),
-(9, 9, 9, 'Wypożyczenie', '12:15', '2024-03-25'),
-(10, 10, 10, 'Wypożyczenie', '15:00', '2024-03-25'),
-(11, 11, 11, 'Wypożyczenie', '11:30', '2024-03-26'),
-(12, 12, 12, 'Wypożyczenie', '14:45', '2024-03-26'),
-(13, 13, 13, 'Wypożyczenie', '17:00', '2024-03-27'),
-(14, 14, 14, 'Wypożyczenie', '12:45', '2024-03-27'),
-(15, 15, 15, 'Wypożyczenie', '09:15', '2024-03-28'),
-(16, 16, 16, 'Wypożyczenie', '10:30', '2024-03-28'),
-(17, 17, 17, 'Wypożyczenie', '13:00', '2024-03-29'),
-(18, 18, 18, 'Wypożyczenie', '15:20', '2024-03-29'),
-(19, 19, 19, 'Wypożyczenie', '11:45', '2024-03-30'),
-(20, 20, 20, 'Wypożyczenie', '14:10', '2024-03-30'),
-(21, 21, 21, 'Wypożyczenie', '16:40', '2024-03-31'),
-(22, 22, 22, 'Wypożyczenie', '10:25', '2024-03-31'),
-(23, 23, 23, 'Wypożyczenie', '12:55', '2024-04-01'),
-(24, 24, 24, 'Wypożyczenie', '15:15', '2024-04-01'),
-(25, 25, 25, 'Wypożyczenie', '17:30', '2024-04-02'),
-(26, 26, 26, 'Wypożyczenie', '11:20', '2024-04-02'),
-(27, 27, 27, 'Wypożyczenie', '14:00', '2024-04-03'),
-(28, 28, 28, 'Wypożyczenie', '16:50', '2024-04-03'),
-(29, 29, 29, 'Wypożyczenie', '10:40', '2024-04-04'),
-(30, 30, 30, 'Wypożyczenie', '13:20', '2024-04-04');
-
-
-
-
-
-INSERT INTO Notyfikacja (IdNotyfikacja, IdPrzedluzenia, Tresc, TYP, IdUzytkownika) VALUES
-(1, 1, 'Twój termin wypożyczenia został przedłużony o kolejny tydzień.', 'Przedłużenie', 1),
-(2, 2, 'Twoja rezerwacja książki została zrealizowana. Możesz odebrać ją w bibliotece.', 'Rezerwacja', 2),
-(3, 3, 'Uwaga! Twój stan konta jest niski. Prosimy o uzupełnienie.', 'Ostrzeżenie', 3),
-(4, 4, 'Masz zaległe książki. Przypominamy o konieczności ich zwrotu.', 'Przypomnienie', 4),
-(5, 5, 'Twoje konto zostało zablokowane z powodu zaległości w zwrotach książek.', 'Ostrzeżenie', 5),
-(6, 6, 'Masz nową wiadomość od biblioteki. Sprawdź swoją skrzynkę.', 'Powiadomienie', 6),
-(7, 7, 'Twoje konto zostało zaktualizowane do statusu Premium. Gratulacje!', 'Informacja', 7),
-(8, 8, 'Masz zaległości w płatnościach. Prosimy o uregulowanie długu.', 'Ostrzeżenie', 8),
-(9, 9, 'Zwrot książki został zarejestrowany. Dziękujemy!', 'Potwierdzenie', 9),
-(10, 10, 'Zapraszamy na wykład autorski w naszej bibliotece.', 'Zaproszenie', 10);
-
-
-
-
-
-
-INSERT INTO Przedluzenie (IdPrzedluzenia, IdWypozyzenia, Typ, CzasPrzedluzenia) VALUES
-(1, 1, 'Tydzień', '7 dni'),
-(2, 2, 'Dwa tygodnie', '14 dni'),
-(3, 3, 'Tydzień', '7 dni'),
-(4, 4, 'Dwa tygodnie', '14 dni'),
-(5, 5, 'Tydzień', '7 dni'),
-(6, 6, 'Dwa tygodnie', '14 dni'),
-(7, 7, 'Tydzień', '7 dni'),
-(8, 8, 'Dwa tygodnie', '14 dni'),
-(9, 9, 'Tydzień', '7 dni'),
-(10, 10, 'Dwa tygodnie', '14 dni'),
-(11, 11, 'Tydzień', '7 dni'),
-(12, 12, 'Dwa tygodnie', '14 dni'),
-(13, 13, 'Tydzień', '7 dni'),
-(14, 14, 'Dwa tygodnie', '14 dni'),
-(15, 15, 'Tydzień', '7 dni'),
-(16, 16, 'Dwa tygodnie', '14 dni'),
-(17, 17, 'Tydzień', '7 dni'),
-(18, 18, 'Dwa tygodnie', '14 dni'),
-(19, 19, 'Tydzień', '7 dni'),
-(20, 20, 'Dwa tygodnie', '14 dni'),
-(21, 21, 'Tydzień', '7 dni'),
-(22, 22, 'Dwa tygodnie', '14 dni'),
-(23, 23, 'Tydzień', '7 dni'),
-(24, 24, 'Dwa tygodnie', '14 dni'),
-(25, 25, 'Tydzień', '7 dni'),
-(26, 26, 'Dwa tygodnie', '14 dni'),
-(27, 27, 'Tydzień', '7 dni'),
-(28, 28, 'Dwa tygodnie', '14 dni'),
-(29, 29, 'Tydzień', '7 dni'),
-(30, 30, 'Dwa tygodnie', '14 dni');
-
-
-
-
-INSERT INTO Wypozyczenie (IdWypozyczenia, IdZamowienia, IdEgzemplarz, DzienWypozyczenia, CzasWypozyczenia, DataZwrotu) VALUES
-(1, 1, 1, 1, '10:00', '2024-03-28'),
-(2, 2, 2, 2, '11:30', '2024-03-29'),
-(3, 3, 3, 3, '12:45', '2024-03-30'),
-(4, 4, 4, 4, '14:20', '2024-03-31'),
-(5, 5, 5, 5, '09:15', '2024-04-01'),
-(6, 6, 6, 6, '10:45', '2024-04-02'),
-(7, 7, 7, 7, '11:55', '2024-04-03'),
-(8, 8, 8, 8, '13:30', '2024-04-04'),
-(9, 9, 9, 9, '14:40', '2024-04-05'),
-(10, 10, 10, 10, '15:50', '2024-04-06'),
-(11, 11, 11, 11, '16:55', '2024-04-07'),
-(12, 12, 12, 12, '17:30', '2024-04-08'),
-(13, 13, 13, 13, '09:45', '2024-04-09'),
-(14, 14, 14, 14, '10:55', '2024-04-10'),
-(15, 15, 15, 15, '11:45', '2024-04-11'),
-(16, 16, 16, 16, '12:30', '2024-04-12'),
-(17, 17, 17, 17, '13:40', '2024-04-13'),
-(18, 18, 18, 18, '14:50', '2024-04-14'),
-(19, 19, 19, 19, '15:55', '2024-04-15'),
-(20, 20, 20, 20, '16:40', '2024-04-16'),
-(21, 21, 21, 21, '17:30', '2024-04-17'),
-(22, 22, 22, 22, '09:30', '2024-04-18'),
-(23, 23, 23, 23, '10:45', '2024-04-19'),
-(24, 24, 24, 24, '11:55', '2024-04-20'),
-(25, 25, 25, 25, '12:45', '2024-04-21'),
-(26, 26, 26, 26, '13:55', '2024-04-22'),
-(27, 27, 27, 27, '14:40', '2024-04-23'),
-(28, 28, 28, 28, '15:50', '2024-04-24'),
-(29, 29, 29, 29, '16:30', '2024-04-25'),
-(30, 30, 30, 30, '17:45', '2024-04-26');
-
-
-
-
-
-
-INSERT INTO GodzinyOtwarcia (IdGodzinyOtwarcia, IdBiblioteka, DzienTygodnia, Godziny, STATUS) VALUES
-(1, 1, 'Poniedziałek', '08:00 - 18:00', 'Otwarta'),
-(2, 1, 'Wtorek', '08:00 - 18:00', 'Otwarta'),
-(3, 1, 'Środa', '08:00 - 18:00', 'Otwarta'),
-(4, 1, 'Czwartek', '08:00 - 18:00', 'Otwarta'),
-(5, 1, 'Piątek', '08:00 - 18:00', 'Otwarta'),
-(6, 1, 'Sobota', '10:00 - 15:00', 'Otwarta'),
-(7, 1, 'Niedziela', 'Zamknięte', 'Zamknięta'),
-(8, 2, 'Poniedziałek', '09:00 - 17:00', 'Otwarta'),
-(9, 2, 'Wtorek', '09:00 - 17:00', 'Otwarta'),
-(10, 2, 'Środa', '09:00 - 17:00', 'Otwarta'),
-(11, 2, 'Czwartek', '09:00 - 17:00', 'Otwarta'),
-(12, 2, 'Piątek', '09:00 - 17:00', 'Otwarta'),
-(13, 2, 'Sobota', '10:00 - 14:00', 'Otwarta'),
-(14, 2, 'Niedziela', 'Zamknięte', 'Zamknięta'),
-(15, 3, 'Poniedziałek', '10:00 - 19:00', 'Otwarta'),
-(16, 3, 'Wtorek', '10:00 - 19:00', 'Otwarta'),
-(17, 3, 'Środa', '10:00 - 19:00', 'Otwarta'),
-(18, 3, 'Czwartek', '10:00 - 19:00', 'Otwarta'),
-(19, 3, 'Piątek', '10:00 - 19:00', 'Otwarta'),
-(20, 3, 'Sobota', '10:00 - 16:00', 'Otwarta'),
-(21, 3, 'Niedziela', 'Zamknięte', 'Zamknięta');
-
-
-
-
-
-INSERT INTO Lokalizacja (IdLokalizacja, Miasto, Ulica, KodPocztowy, Wojewodztwo) VALUES
-(1, 'Warszawa', 'ul. Nowa 1', '00-001', 'Mazowieckie'),
-(2, 'Kraków', 'ul. Stara 2', '30-002', 'Małopolskie'),
-(3, 'Gdańsk', 'ul. Rzeczna 3', '80-003', 'Pomorskie');
-
-
-
-
-
-INSERT INTO Biblioteka (IdBiblioteka, IdLokalizacja, IdGodzinyOtwarcia) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 3);
-
-
-
-
-INSERT INTO Wydawnictwo (IdWydawnictwo, Nazwa) VALUES
-(1, 'Wydawnictwo A'),
-(2, 'Wydawnictwo B'),
-(3, 'Wydawnictwo C'),
-(4, 'Wydawnictwo D'),
-(5, 'Wydawnictwo E'),
-(6, 'Wydawnictwo F'),
-(7, 'Wydawnictwo G'),
-(8, 'Wydawnictwo H'),
-(9, 'Wydawnictwo I'),
-(10, 'Wydawnictwo J');
+INSERT INTO Authors (Surename, Name, Biography) VALUES
+('Smith', 'John', 'John Smith is a prolific author known for his captivating novels.'),
+('Johnson', 'Emily', 'Emily Johnson is a renowned writer specializing in mystery and suspense.'),
+('Brown', 'Michael', 'Michael Brown is a talented author with a knack for storytelling.'),
+('Taylor', 'Emma', 'Emma Taylor is an emerging author making waves in the literary world.'),
+('Anderson', 'David', 'David Anderson is an experienced novelist with a unique writing style.'),
+('Clark', 'Sarah', 'Sarah Clark is a bestselling author of romance novels loved by readers worldwide.'),
+('Moore', 'James', 'James Moore is an award-winning author recognized for his contributions to literature.'),
+('Evans', 'Jessica', 'Jessica Evans is a versatile writer who excels in both fiction and non-fiction genres.'),
+('King', 'Stephen', 'Stephen King is a master of horror fiction, known for his chilling and suspenseful stories.'),
+('Roberts', 'Nora', 'Nora Roberts is a prolific romance novelist with a loyal fan base.');
+
+
+
+INSERT INTO Publishing_houses (Name) VALUES
+('Penguin Random House'),
+('HarperCollins Publishers'),
+('Simon & Schuster'),
+('Hachette Livre'),
+('Macmillan Publishers'),
+('Scholastic Corporation'),
+('Pearson Education'),
+('Wiley'),
+('Oxford University Press'),
+('Cambridge University Press');
+
+
+INSERT INTO Categories (Name) VALUES
+('Fikcja'),
+('Literatura popularnonaukowa'),
+('Fantastyka'),
+('Romans'),
+('Thriller'),
+('Literatura dziecięca'),
+('Biografia'),
+('Kryminał'),
+('Literatura naukowa'),
+('Poezja');
+
+
+INSERT INTO Reviews (Mark, Review, Hide) VALUES
+(4, 'Bardzo dobra książka, polecam!', 0),
+(3, 'Ciekawa lektura, ale mogłaby być lepsza.', 0),
+(5, 'Naprawdę uwielbiam tę książkę, koniecznie przeczytajcie!', 0),
+(2, 'Książka nie spełniła moich oczekiwań, nie polecam.', 1),
+(4, 'Ciekawa fabuła z niespodziewanymi zwrotami akcji, solidna lektura.', 0);
+
+
+INSERT INTO Providers (Company_name, Adres, Phone_number) VALUES
+('BookWorld', '123 Main Street, Cityville', '+1234567890'),
+('BooksRUs', '456 Elm Street, Townsville', '+0987654321'),
+('ReadingCorner', '789 Oak Street, Villageton', '+1357924680'),
+('BookEmporium', '321 Pine Street, Hamletown', '+2468135790'),
+('BookNook', '654 Maple Street, Boroughville', '+9876543210');
+
+
+INSERT INTO Invoices (Amount, Payment, Bank_account_number) VALUES
+(100, 'Zapłacone', 'PL12345678901234567890123456'),
+(150, 'Niezapłacone', 'PL98765432109876543210987654'),
+(200, 'Zapłacone', 'PL11112222333344445555666677'),
+(75, 'Niezapłacone', 'PL88887777666655554444333322'),
+(120, 'Zapłacone', 'PL99998888777766665555444433');
+
+
+INSERT INTO Locations (City, Street, Number, Post_code) VALUES
+('Warszawa', 'ul. Nowa 1', '5A', '00-001'),
+('Kraków', 'ul. Stara 2', '10', '30-002'),
+('Gdańsk', 'ul. Główna 3', '15B', '80-003'),
+('Wrocław', 'ul. Środkowa 4', '20', '50-004'),
+('Poznań', 'ul. Zielona 5', '25C', '60-005');
+
+
+
+INSERT INTO Open_hours (Day_of_week, Hours, Status) VALUES
+('Poniedziałek', '08:00-18:00', 'Otwarte'),
+('Wtorek', '09:00-19:00', 'Otwarte'),
+('Środa', '08:30-17:30', 'Otwarte'),
+('Czwartek', '10:00-20:00', 'Otwarte'),
+('Piątek', '07:00-17:00', 'Zamknięte');
+
+
+INSERT INTO Employees (Phone_number, Salary, Working_hours, Status, Login, Password) VALUES
+('+123456789', 3000, 40, 'Active', 'employee1', 'password1'),
+('+987654321', 3500, 35, 'Active', 'employee2', 'password2'),
+('+111222333', 3200, 38, 'Active', 'employee3', 'password3'),
+('+444555666', 2800, 42, 'Active', 'employee4', 'password4'),
+('+777888999', 3100, 37, 'Active', 'employee5', 'password5');
+
+
+
+
+INSERT INTO Extensions (Date_of_extension, Numbers_of_days, Type) VALUES
+('2024-03-20 10:00:00', 7, 'Standardowe'),
+('2024-03-21 09:00:00', 5, 'Priorytetowe'),
+('2024-03-22 08:00:00', 3, 'Standardowe'),
+('2024-03-23 11:00:00', 10, 'Standardowe'),
+('2024-03-24 12:00:00', 4, 'Priorytetowe');
+
+
+
+INSERT INTO Books (Author_ID, Description, Title, Publishing_year, Publishing_house_ID, Category_ID, Review_ID, Numbers_of_books) VALUES
+(1, 'Wzruszająca opowieść o przygodach młodego czarodzieja w magicznym świecie.', 'Harry Potter i Komnata Tajemnic', 1998, 1, 3, 1, 120),
+(2, 'Porywająca powieść kryminalna o poszukiwaniach zaginionej dziewczyny.', 'Zaginiona dziewczyna', 2012, 2, 4, 2, 150),
+(3, 'Klasyczna opowieść o miłości i tajemnicach ukrytych w starym pamiętniku.', 'Pamiętnik', 1996, 3, 4, 3, 100),
+(4, 'Epicka saga fantasy o podróży małego hobbita w celu pokonania ciemnych sił.', 'Władca Pierścieni: Drużyna Pierścienia', 1954, 4, 3, 3, 200),
+(5, 'Urocza historia o przygodach pluszowego misia i jego przyjaciół.', 'Kubuś Puchatek', 1926, 5, 6, 5, 80),
+(6, 'Intrygująca książka o tajemniczych zniknięciach i śledztwie w małym miasteczku.', 'Zaginięcie', 2014, 2, 8, 4, 180),
+(7, 'Emocjonująca opowieść o życiu i śmierci w okopach I wojny światowej.', 'Wiatr zmian', 1999, 7, 1, 4, 90),
+(8, 'Wzruszająca powieść o przyjaźni i odwadze w czasach II wojny światowej.', 'Mały Książę', 1943, 8, 5, 5, 110),
+(9, 'Pasjonująca historia o odkryciu skarbów i poszukiwaniu przygód.', 'Wyspa skarbów', 1883, 9, 3, 4, 70),
+(10, 'Zaskakująca książka o manipulacji i intrygach w świecie wielkiego biznesu.', 'Pamiętnik znaleziony w wannie', 1961, 10, 4, 3, 140);
+
+
+
+
+
+INSERT INTO Deliveries (Book_ID, Provider_ID, Date_of_order, Order_status, Invoice_ID) VALUES
+(1, 1, '2024-03-20 08:00:00', 'Złożone', 1),
+(2, 2, '2024-03-21 09:30:00', 'W trakcie', 2),
+(3, 3, '2024-03-22 10:45:00', 'Złożone', 3),
+(4, 4, '2024-03-23 11:15:00', 'Złożone', 4),
+(5, 5, '2024-03-24 12:30:00', 'W trakcie', 5),
+(6, 6, '2024-03-25 13:45:00', 'Złożone', 6),
+(7, 7, '2024-03-26 14:00:00', 'W trakcie', 7),
+(8, 8, '2024-03-27 15:30:00', 'Złożone', 8),
+(9, 9, '2024-03-28 16:45:00', 'Złożone', 9),
+(10, 10, '2024-03-29 17:00:00', 'W trakcie', 10);
+
+
+INSERT INTO Libraries (Name, Location_ID, Open_hour_ID, Employee_ID) VALUES
+('Biblioteka Miejska', 1, 1, 1),
+('Biblioteka Szkolna Nr 1', 2, 2, 2),
+('Biblioteka Uniwersytecka', 3, 3, 3);
+
+
+INSERT INTO Elementary_books (Book_ID, Library_ID, Status, Wear) VALUES
+(1, 1, 'Dostępna', 10),
+(2, 2, 'Dostępna', 8),
+(3, 3, 'Wypożyczona', 5),
+(4, 4, 'Dostępna', 7),
+(5, 5, 'Dostępna', 9),
+(6, 6, 'Wypożyczona', 3),
+(7, 7, 'Dostępna', 6),
+(8, 8, 'Wypożyczona', 4),
+(9, 9, 'Dostępna', 8),
+(10, 10, 'Dostępna', 7);
+
+
+
+INSERT INTO Users (Name, Email, Phone_number, Status, Indeks) VALUES
+('Jan Kowalski', 'jan.kowalski@example.com', '123456789', 'Aktywny', 123456),
+('Anna Nowak', 'anna.nowak@example.com', '987654321', 'Aktywny', 654321),
+('Piotr Wiśniewski', 'piotr.wisniewski@example.com', '111222333', 'Aktywny', 789123),
+('Maria Lewandowska', 'maria.lewandowska@example.com', '444555666', 'Aktywny', 456789),
+('Andrzej Dąbrowski', 'andrzej.dabrowski@example.com', '777888999', 'Aktywny', 321654),
+('Magdalena Woźniak', 'magdalena.wozniak@example.com', '000111222', 'Aktywny', 987456),
+('Krzysztof Kamieński', 'krzysztof.kamienski@example.com', '333444555', 'Aktywny', 159753),
+('Barbara Kowalczyk', 'barbara.kowalczyk@example.com', '666777888', 'Aktywny', 357951),
+('Tomasz Zieliński', 'tomasz.zielinski@example.com', '999000111', 'Aktywny', 852963),
+('Monika Szymańska', 'monika.szymanska@example.com', '222333444', 'Aktywny', 246810);
+
+
+
+INSERT INTO Orders (Elementary_book_ID, User_ID, Date, Pickup_time) VALUES
+(1, 1, '2024-03-20 10:00:00', 2),
+(2, 2, '2024-03-21 11:00:00', 3),
+(3, 3, '2024-03-22 12:00:00', 4),
+(4, 4, '2024-03-23 13:00:00', 5),
+(5, 5, '2024-03-24 14:00:00', 6),
+(6, 6, '2024-03-25 15:00:00', 7),
+(7, 7, '2024-03-26 16:00:00', 8),
+(8, 8, '2024-03-27 17:00:00', 9),
+(9, 9, '2024-03-28 18:00:00', 10),
+(10, 10, '2024-03-29 19:00:00', 11);
+
+
+
+
+INSERT INTO Notifications (Notification_type, Extension_ID, Date, Content, User_ID) VALUES
+('Przypomnienie', 1, '2024-03-20 08:00:00', 'Prosimy o zwrócenie książki', 1),
+('Powiadomienie', 2, '2024-03-21 09:00:00', 'Twoje wypożyczenie zostało przedłużone', 2),
+('Ostrzeżenie', 3, '2024-03-22 10:00:00', 'Przekroczono termin zwrotu książki', 3),
+('Informacja', 4, '2024-03-23 11:00:00', 'Nowe książki dostępne w bibliotece', 4),
+('Przypomnienie', 5, '2024-03-24 12:00:00', 'Prosimy o zwrócenie książki', 5),
+('Powiadomienie', 6, '2024-03-25 13:00:00', 'Twoje wypożyczenie zostało przedłużone', 6),
+('Ostrzeżenie', 7, '2024-03-26 14:00:00', 'Przekroczono termin zwrotu książki', 7),
+('Informacja', 8, '2024-03-27 15:00:00', 'Nowe książki dostępne w bibliotece', 8),
+('Przypomnienie', 9, '2024-03-28 16:00:00', 'Prosimy o zwrócenie książki', 9),
+('Powiadomienie', 10, '2024-03-29 17:00:00', 'Twoje wypożyczenie zostało przedłużone', 10);
+
+
+
+
+INSERT INTO Rents (User_ID, Elementary_book_ID, Rent_date, Return_date, Rental_time, Order_ID, Extension_ID, Employee_ID) VALUES
+(1, 1, '2024-03-20 10:00:00', '2024-03-25', 5, 1, NULL, 1),
+(2, 2, '2024-03-21 11:00:00', '2024-03-26', 5, 2, NULL, 2),
+(3, 3, '2024-03-22 12:00:00', '2024-03-27', 5, 3, NULL, 3),
+(4, 4, '2024-03-23 13:00:00', '2024-03-28', 5, 4, NULL, 4),
+(5, 5, '2024-03-24 14:00:00', '2024-03-29', 5, 5, NULL, 5),
+(6, 6, '2024-03-25 15:00:00', '2024-03-30', 5, 6, NULL, 6),
+(7, 7, '2024-03-26 16:00:00', '2024-03-31', 5, 7, NULL, 7),
+(8, 8, '2024-03-27 17:00:00', '2024-04-01', 5, 8, NULL, 8),
+(9, 9, '2024-03-28 18:00:00', '2024-04-02', 5, 9, NULL, 9),
+(10, 10, '2024-03-29 19:00:00', '2024-04-03', 5, 10, NULL, 10);
+
+
+
+INSERT INTO Config (Name, Value, Modification_date) VALUES
+('Max_books_per_user', 5, '2024-03-20 08:00:00'),
+('Max_rental_days', 14, '2024-03-21 09:00:00'),
+('Fine_per_day', 1, '2024-03-22 10:00:00'),
+('Max_extensions', 3, '2024-03-23 11:00:00'),
+('Max_wear_level', 10, '2024-03-24 12:00:00'),
+('Max_salary', 5000, '2024-03-25 13:00:00'),
+('Min_working_hours', 20, '2024-03-26 14:00:00'),
+('Admin_email', 'admin@example.com', '2024-03-27 15:00:00'),
+('Fine_threshold', 7, '2024-03-28 16:00:00'),
+('Notification_period', 3, '2024-03-29 17:00:00');
