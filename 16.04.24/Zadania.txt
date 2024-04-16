@@ -69,7 +69,13 @@ where OrderQty is NULL
 -- Znajdź wszystkie zamówienia dla klienta o CustomerID równym 1, które zawierają 
 --więcej niż 5 różnych produktów. Użyj tabel Sales.SalesOrderHeader i Sales.SalesOrderDetail.
 
-
+!!!!!!!!! NIE DZIALA !!!!!!!!!!
+SELECT h.SalesOrderID, COUNT(d.ProductID) ilosc_produktow 
+FROM Sales.SalesOrderHeader h
+INNER JOIN Sales.SalesOrderDetail d ON h.SalesOrderID = d.SalesOrderID
+WHERE h.CustomerID = 1
+GROUP BY h.SalesOrderID
+HAVING COUNT(DISTINCT d.ProductID) >5
 
 
 --Znajdź wszystkich klientów (CustomerID) z tabeli Sales.OrderHeader, 
