@@ -1,0 +1,133 @@
+--Wypisz wszystkich pracowników (FirstName, LastName) wraz z ich stanowiskiem (JobTitle) 
+--z tabeli HumanResources.Employee oraz Person.Person, gdzie data zatrudnienia (HireDate)
+--jest późniejsza niż 1 stycznia 2007 roku.
+
+
+
+
+
+select e.JobTitle, e.HireDate from HumanResources.Employee e where e.HireDate > '2007-01-01'
+select p.FirstName, p.LastName from Person.Person p
+
+Select e.JobTitle, e.HireDate, p.FirstName, p.LastName 
+FROM HumanResources.Employee e 
+INNER JOIN Person.Person p 
+ON e.BusinessEntityID=p.BusinessEntityID AND e.HireDate > '2007.01.01'
+
+-- Lepsza wersja
+
+Select e.JobTitle, e.HireDate, p.FirstName, p.LastName 
+FROM HumanResources.Employee e 
+INNER JOIN Person.Person p 
+ON e.BusinessEntityID=p.BusinessEntityID WHERE e.HireDate > '2007.01.01'
+
+
+
+
+
+
+
+--Znajdź średnią cenę produktów (ListPrice) dla każdej kategorii produktów (Name) z 
+--tabel Production.Product oraz Production.ProductCategory.
+
+
+
+SELECT pc.Name as Category, AVG(p.ListPrice) as avgListPrice from Production.Product p
+INNER JOIN [Production].[ProductSubcategory] as ps ON p.ProductSubcategoryID = ps.ProductSubcategoryID
+INNER JOIN Production.ProductCategory pc ON pc.ProductCategoryID=ps.ProductCategoryID
+GROUP BY pc.Name
+ORDER BY 1
+
+
+
+
+
+--Wypisz nazwy produktów, które nigdy nie zostały zamówione
+--(wykorzystaj tabele Sales.SalesOrderDetail i Production.Product).
+
+
+SELECT p.Name FROM Production.Product p
+where p.ProductID NOT IN ( SELECT sod.ProductID FROM [Sales].[SalesOrderDetail] sod)
+
+
+-- Z użyciem Joina
+
+select p.Name sod.OrderQty from Production.Product p
+LEFT JOIN [Sales].[SalesOrderDetail] sod ON sod.ProductID = p.ProductID
+where OrderQty is NULL
+
+
+
+
+--Utwórz zapytanie  indeks na kolumnie HireDate w tabeli HumanResources.Employee 
+--w celu optymalizacji zapytań filtrujących po tej kolumnie.
+
+
+
+
+
+-- Znajdź wszystkie zamówienia dla klienta o CustomerID równym 1, które zawierają 
+--więcej niż 5 różnych produktów. Użyj tabel Sales.SalesOrderHeader i Sales.SalesOrderDetail.
+
+
+
+
+--Znajdź wszystkich klientów (CustomerID) z tabeli Sales.OrderHeader, 
+--którzy złożyli zamówienie w 2019 roku. Zwróć uwagę na wydajność zapytania.
+
+
+
+--Wypisz nazwiska (LastName) i imiona (FirstName) pracowników, 
+--którzy zostali zatrudnieni po roku 2015 i pracują na stanowisku 'Sales Representative'.
+
+--Oblicz średnią cenę produktów w każdej kategorii produktów. [Production.Product] i [Production.ProductCategory]
+
+
+--Utwórz zapytanie, które wyświetla ranking sprzedawców w
+-- oparciu o łączną kwotę sprzedaży. [Sales.SalesOrderHeader] [Sales.SalesPerson]
+-- utworz widok zmaterializowany
+
+
+
+--Utwórz nowego użytkownika z autentykacją SQL.
+--Przypisz użytkownika do roli serwera sysadmin
+--Przypisz użytkownika do roli bazy danych db_datareader w AdventureWorks2019.
+--Przydziel użytkownikowi uprawnienia do odczytu z wybranej tabeli w AdventureWorks2019.
+--Przydziel użytkownikowi uprawnienia do odczytu tylko wybranych kolumn w tabeli Person.Person
+
+
+--Zadanie
+--Utworzenie Użytkownika:
+--Utwórz użytkownika SQL Analyst z silnym hasłem. Użytkownik ten będzie służył do 
+--analizy danych z bazy AdventureWorks2019.
+
+--Przydzielenie Roli:
+--Przydziel użytkownikowi Analyst rolę db_datareader, która pozwoli na czytanie 
+--wszystkich tabel w bazie danych AdventureWorks2019.
+
+--Ograniczenie Uprawnień:
+--Mimo że użytkownik Analyst ma uprawnienia do czytania z wszystkich tabel, wymagane jest, 
+--aby miał ograniczony dostęp tylko do niektórych kolumn w tabeli Person.Person. 
+--Przydziel użytkownikowi uprawnienia do odczytu tylko kolumn FirstName, LastName, i EmailAddress.
+
+--Uprawnienia do Wykonywania Procedur Składowanych:
+--W bazie danych AdventureWorks2019 znajduje się procedura składowana uspGetManagerEmployees. 
+--Przydziel użytkownikowi Analyst uprawnienia do jej wykonywania.
+
+--Historia:
+--Dział sprzedaży AdventureWorks2019 chce przydzielić dostęp do danych sprzedażowych dla nowego analityka, Marka. 
+--Marek musi mieć możliwość przeglądania danych sprzedażowych, ale nie powinien mieć dostępu do informacji o kosztach zakupu produktów.
+--Zadania:
+--Utwórz użytkownika SQL MarkSalesAnalyst z bezpiecznym hasłem.
+--Przydziel użytkownikowi dostęp do bazy danych AdventureWorks2019 jako db_datareader.
+--Ogranicz uprawnienia Marka, aby nie mógł on wykonywać zapytań do kolumny StandardCost w tabeli Production.Product.
+--Przydziel Markowi uprawnienia do wykonania procedury uspGetWhereUsedProductID, która pozwoli mu analizować, gdzie produkty są używane.
+
+
+--Historia:
+--Zespół sprzedaży AdventureWorks2019 potrzebuje szybszego dostępu do raportów sprzedaży. 
+--Obecny czas dostępu do danych jest niezadowalający, a zadaniem IT jest optymalizacja tego procesuZadania:
+
+--Utwórz użytkownika SQL SalesReportUser z bezpiecznym hasłem.
+--Przydziel uprawnienia do wykonania istniejącej procedury składowanej uspGetSalesReport dla SalesReportUser.
+--Zasugeruj zmianę w strukturze indeksów, która mogłaby poprawić wydajność procedury uspGetSalesReport, nie zmieniając jej kodu.
