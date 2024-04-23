@@ -1,0 +1,123 @@
+-- Wyświetl wszystkich klinetów z tabel Sales.Customer, sortując ich nazwisko (LastName) w porządku malejącym.
+
+--SELECT DISTINCT p.LastName
+--FROM Sales.Customer c
+--JOIN Person.Person p ON p.BusinessEntityID = c.CustomerID
+--ORDER BY p.LastName DESC;
+
+-- Podaj średnią cenę (Listprice) produktów dla każdej kategorii produktów z tabeli Production.Product
+
+--SELECT pc.Name, AVG (p.Listprice)
+--FROM Production.Product p
+--JOIN [Production].ProductSubcategory ps ON ps.ProductSubcategoryID=p.ProductSubcategoryID
+--JOIN [Production].[ProductCategory] pc ON pc.ProductCategoryID=ps.ProductCategoryID
+--GROUP BY pc.Name
+
+-- Z tabeli Person.Person wybierz osoby, dla których FirstName zaczyna się na literę 'A', używając funckji LEFT()/
+
+--SELECT p.FirstName
+--FROM Person.Person p
+--WHERE LEFT(p.FirstName, 1) = 'A'
+
+-- Wybierz wszystkie produkty, które nie zostały jeszcze zamówione, korzystając z tabel Production.Product i Sales.SalesOrderDetail.
+
+
+--SELECT p.Name, sod.OrderQty 
+--FROM Production.Product p
+--LEFT JOIN [Sales].[SalesOrderDetail] sod ON sod.ProductID = p.ProductID
+--WHERE sod.OrderQty IS NULL;
+
+
+-- Wyświetl nazwiska (LastNaame) pracowników i nazwy działów (Name), w których pracują, korzystając z tabel HumanResources.Employee,
+
+--SELECT p.LastName, d.Name
+--FROM HumanResources.Employee ps
+--JOIN Person.Person p ON p.BusinessEntityID = ps.BusinessEntityID
+--JOIN HumanResources.EmployeeDepartmentHistory edh ON edh.BusinessEntityID=ps.BusinessEntityID
+--JOIN HumanResources.Department d ON d.DepartmentID = edh.DepartmentID
+
+-- Wybierz nazwy działów i liczbę pracownikóww w każdym dziale z tabeli HumanResources.Department i 
+-- HumanResources.EmployeeDepartmentHistory, grupując wyniki po nazwie działu.
+
+SELECT d.Name AS DepartmentName, COUNT(edh.BusinessEntityID) AS NumberOfEmployees
+FROM HumanResources.Department d
+LEFT JOIN HumanResources.EmployeeDepartmentHistory edh ON d.DepartmentID = edh.DepartmentID
+GROUP BY d.Name;
+
+
+-- Z tabeli Person.Person wybierz FirstName i LastName oraz uwtórz nową kolumnę FullName,
+-- która będzie zawierać pełne imię i nazwisko, oddzielone spacją.
+
+SELECT FirstName,LastName,
+CONCAT(FirstName, ' ', LastName) AS FullName
+FROM Person.Person;
+
+-- Napisz zapytanie, które dodaje nowego pracownika do HumanResources.Employee,
+-- a następnie aktualizuje jego JobTitle, wszystko w ramach jednej transakcji.
+
+
+
+-- Wybierz ProductID i OrderQty z tabeli Sales.SalesOrderDetail dla SalesOrderID poniżej 1000 i
+-- zapisz wyniki w tabeli tymczasowej. Następnie wybierz wszystkie rekordy z tej tabeli tymczasowej.
+
+--SELECT ProductID, OrderQty INTO #TempOrder123
+--FROM Sales.SalesOrderDetail
+--where SalesOrderID > 1000
+
+--select * from #TempOrder123
+
+-- Napisz skrypt, który dynamicznie tworzy i wykonuje zapytanie SQL wybierające wszystkie kolumny 
+-- z tabeli Person.Address i sortujące wyniki według City
+
+DECLARE @query as NVARCHAR(MAX);
+SET @query = 'SELECT * FROM Person.Address ORDER BY City';
+EXEC sp_executesql @query
+
+
+--Wybierz z tabeli Sales.SalesOrderHeader kolumny SalesOrderID i OrderDate. 
+--Użyj funkcji TRY_CONVERT do przekonwertowania OrderDate na format YYYY-MM-DD.
+
+SELECT 
+    SalesOrderID,
+    TRY_CONVERT(varchar, OrderDate, 23) AS FormattedOrderDate
+FROM 
+    Sales.SalesOrderHeader;
+
+
+--Wyświetl BusinessEntityID i liczbę dni, które upłynęły od daty zatrudnienia (HireDate) 
+--do dzisiaj dla każdego pracownika z tabeli HumanResources.Employee.
+
+
+--Wybierz OrderDate z tabeli Sales.SalesOrderHeader i sformatuj daty w formacie 'MM-dd-yyyy'.
+
+
+--Z tabeli Person.Person wybierz BusinessEntityID, FirstName, LastName oraz kolumnę IsFemale, 
+--która będzie zawierała wartość TRUE, jeśli Gender = 'F', w przeciwnym razie FALSE.
+
+
+--Znajdź wszystkie duplikaty EmailAddress w tabeli Person.Person.
+
+SELECT e.EmailAddress, COUNT(*)
+FROM Person.Person p 
+JOIN Person.EmailAddress e on e.BusinessEntityID = p.BusinessEntityID
+GROUP BY e.EmailAddress
+HAVING COUNT(*) > 1;
+
+
+
+--Utwórz widok V_EmployeeDepartment, który wyświetla imiona i nazwiska pracowników oraz nazwy ich	
+--działów z tabel HumanResources.Employee, Person.Person i HumanResources.Department.
+
+
+-- Optymalizuj zapytanie, które łączy tabele Sales.SalesOrderHeader, Sales.SalesOrderDetail,
+-- Production.Product i Person.Person, aby znaleźć wszystkie zamówienia zawierające wiecej niż 
+-- jeden produkt, wraz z informacjami o klientach
+
+
+SELECT soh.SalesOrderID,
+COUNT(DISTINCT sod.ProductID) AS NumberOfProducts, pp.FirstName, pp.LastName
+FROM Sales.SalesOrderHeader soh
+JOIN Sales.SalesOrderDetail sod ON soh.SalesOrderID = sod.SalesOrderID
+JOIN Person.Person pp ON soh.CustomerID = pp.BusinessEntityID
+GROUP BY soh.SalesOrderID, pp.FirstName, pp.LastName
+HAVING COUNT(DISTINCT sod.ProductID) > 1;
