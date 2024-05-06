@@ -1,0 +1,222 @@
+Procedury składowane:
+
+    Procedura dodająca nowego pracownika:
+        Stwórz procedurę, która przyjmuje parametry (imię, nazwisko, data zatrudnienia, dział) i dodaje nowego pracownika do tabeli Person.Person.
+
+DROP PROCEDURE IF EXISTS DodajNowegoPracownika;
+
+USE AdventureWorks2019;
+GO
+
+
+CREATE PROCEDURE DodajNowegoPracownika
+	@Imie NVARCHAR(50),
+	@Nazwisko VARCHAR(50),
+	@DataZatrudnienia DATE,
+	@Dzial VARCHAR
+
+AS
+BEGIN
+	DECLARE @ID INT;
+
+	INSERT INTO Person.BusinessEntity (ModifiedDate) values (CURRENT_TIMESTAMP);
+
+	SET @ID = SCOPE_IDENTITY();
+
+	INSERT INTO Person.Person (BusinessEntityID, FirstName, LastName, PersonType, NameStyle, EmailPromotion, ModifiedDate)
+	VALUES (@ID, @Imie, @Nazwisko, 'EM',0,0,CURRENT_TIMESTAMP)
+
+END;
+
+
+EXEC DodajNowegoPracownika @Imie = 'Zygmunt', @Nazwisko = 'HAIZER', @DataZatrudnienia = '2023-12-12', @Dzial = '';
+
+
+******************************************************************************************************************************************
+
+
+    Procedura zmieniająca adres pracownika:
+        Stwórz procedurę, która przyjmuje ID pracownika i nowy adres, a następnie aktualizuje adres pracownika w tabeli HumanResources.EmployeeAddress.
+
+
+
+DROP PROCEDURE IF EXISTS UpdateEmployeeAddress;
+
+USE AdventureWorks2019;
+GO
+
+CREATE PROCEDURE UpdateEmployeeAddress
+    @EmployeeID INT,
+    @NewAddress NVARCHAR(255)
+AS
+BEGIN
+    UPDATE HumanResources.EmployeeAddress
+    SET Address = @NewAddress
+    WHERE EmployeeID = @EmployeeID;
+END;
+
+
+EXEC UpdateEmployeeAddress @EmployeeID = 123, @NewAddress = 'Nowy adres pracownika';
+
+******************************************************************************************************************************************
+    Procedura wyliczająca roczne wynagrodzenie:
+        Stwórz procedurę, która przyjmuje ID pracownika i zwraca roczne wynagrodzenie pracownika na podstawie jego pensji miesięcznej.
+
+
+DROP PROCEDURE IF EXISTS WyliczenieRoczne;
+
+USE AdventureWorks2019;
+GO
+
+
+CREATE PROCEDURE WyliczenieRoczne
+	@ID INT
+
+AS
+BEGIN
+
+	SELECT Rate * 12 * PayFrequency FROM HumanResources.EmployeePayHistory WHERE BusinessEntityID = @ID ORDER BY RateChangeDate desc OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY;
+
+END;
+
+
+EXEC WyliczenieRoczne @ID = 16;
+
+******************************************************************************************************************************************
+
+
+Funkcje skalarne:
+
+    Funkcja obliczająca wiek pracownika:
+        Stwórz funkcję, która przyjmuje datę urodzenia pracownika i zwraca jego wiek w latach.
+
+
+
+DROP FUNCTION IF EXISTS WiekPracownikaWLatach;
+
+USE AdventureWorks2019;
+GO
+
+CREATE FUNCTION WiekPracownikaWLatach
+(
+	@Date DATE
+)
+
+RETURNS INT 
+AS
+BEGIN
+	DECLARE @COS INT;
+	SELECT @COS = DATEDIFF(YEAR, @Date, Convert(date, getdate()) );
+	RETURN @COS;
+
+END;
+
+DECLARE @DataUrodzenia DATE = '1990-05-15';
+SELECT dbo.WiekPracownikaWLatach(@DataUrodzenia) AS 'Wiek';
+
+
+
+******************************************************************************************************************************************
+
+
+  Funkcja sprawdzająca dostępność produktu:
+        Stwórz funkcję, która przyjmuje ID produktu i zwraca 'Dostępny', jeśli produkt jest w magazynie, a 'Niedostępny', jeśli nie ma go w magazynie.
+
+
+DROP FUNCTION IF EXISTS DostepnoscProduktu;
+
+USE AdventureWorks2019;
+GO
+
+CREATE FUNCTION DostepnoscProduktu
+(
+	@ProductID INT
+)
+
+RETURNS VARCHAR(15)
+AS
+BEGIN
+	DECLARE @cos INT;
+	DECLARE @RESULT VARCHAR(15);
+
+	SELECT @cos = COUNT(*) FROM Production.Product WHERE ProductID = @ProductID;
+	IF @cos > 0 
+		SET @RESULT = 'Dostępny';
+	Else
+		SET @RESULT = 'Niedostępny';
+
+	return @RESULT;
+END;
+
+
+DECLARE @returnvalue VARCHAR(15);
+EXEC @returnvalue = DostepnoscProduktu @ProductID = 316;
+PRINT @returnvalue
+
+
+******************************************************************************************************************************************
+
+
+
+Triggery:
+
+
+    Trigger sprawdzający maksymalną liczbę pracowników w dziale:
+        Stwórz trigger, który po próbie dodania nowego pracownika sprawdza, czy liczba pracowników w danym dziale nie przekracza ustalonej maksymalnej liczby.
+
+
+******************************************************************************************************************************************
+
+    Trigger aktualizujący stan magazynowy po zmianie zamówienia:
+        Stwórz trigger, który po zmianie zamówienia aktualizuje stan magazynowy produktów w tabeli Production.ProductInventory.
+
+CREATE TRIGGER AktualizacjaStanuMagazynowego
+ON Sales.SalesOrderDetail
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    IF EXISTS (SELECT * FROM inserted) -- Sprawdź, czy wystąpiła operacja INSERT lub UPDATE
+    BEGIN
+        UPDATE pi
+        SET pi.Quantity = pi.Quantity - i.OrderQty
+        FROM Production.ProductInventory pi
+        JOIN inserted i ON pi.ProductID = i.ProductID;
+    END
+    ELSE -- Jeśli wystąpiła operacja DELETE
+    BEGIN
+        UPDATE pi
+        SET pi.Quantity = pi.Quantity + d.OrderQty
+        FROM Production.ProductInventory pi
+        JOIN deleted d ON pi.ProductID = d.ProductID;
+    END
+END;
+
+
+******************************************************************************************************************************************
+
+    Trigger archiwizujący dane klientów:
+        Stwórz trigger, który po usunięciu rekordu klienta z tabeli Sales.Customer, przenosi ten rekord do tabeli Sales.ArchivedCustomers w celu archiwizacji.
+
+
+DROP TRIGGER IF EXISTS ArchiwaKlientow;
+
+USE AdventureWorks2019;
+GO
+
+
+CREATE TRIGGER ArchiwaKlientow
+ON Sales.Customer
+AFTER DELETE
+
+AS
+BEGIN
+	BEGIN
+		INSERT INTO dbo.Sales.ArchivedCustomer2
+			(CustomerID, PersonID, StoreID, TerritoryID, rowguid, ModifiedDate)
+		VALUES 
+			((SELECT deleted.CustomerID, deleted.PersonID, deleted.StoreID, deleted.TerritoryID, deleted.rowguid, deleted.ModifiedDate FROM deleted));
+	END;
+END;
+
+
+
