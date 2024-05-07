@@ -1,0 +1,207 @@
+Procedura usuwająca klienta wraz z jego zamówieniami:
+
+    Stwórz procedurę, która usuwa klienta z bazy danych wraz z wszystkimi powiązanymi zamówieniami znajdującymi się w tabeli Sales.SalesOrderHeader.
+
+
+DROP PROCEDURE IF EXISTS UsunKlientaZJegoZamowieniem;
+
+USE AdventureWorks2019;
+GO
+
+
+CREATE PROCEDURE UsunKlientaZJegoZamowieniem
+    @CustomerID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Usuń zamówienia klienta
+    DELETE FROM Sales.SalesOrderHeader
+    WHERE CustomerID = @CustomerID;
+
+    -- Usuń klienta
+    DELETE FROM Sales.Customer
+    WHERE CustomerID = @CustomerID;
+END;
+
+EXEC UsunKlientaZJegoZamowieniem @CustomerID = 29825;
+
+
+
+Procedura generująca raport o sprzedaży dla określonego okresu:
+
+    Stwórz procedurę, która generuje raport o sprzedaży dla określonego okresu czasu, zwracając sumę sprzedaży dla każdego produktu w danym okresie. SalesOrderDetail
+Procedura aktualizująca stan magazynowy po dodaniu nowej dostawy:
+
+
+DROP PROCEDURE IF EXISTS GenerateSalesReport;
+********************************************************************************************************************
+USE AdventureWorks2019;
+GO
+
+CREATE PROCEDURE GenerateSalesReport
+    @StartDate DATE,
+    @EndDate DATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        p.Name AS ProductName,
+        SUM(sod.OrderQty * sod.UnitPrice) AS TotalSales
+    FROM 
+        Sales.SalesOrderDetail sod
+    INNER JOIN 
+        Production.Product p ON sod.ProductID = p.ProductID
+    INNER JOIN 
+        Sales.SalesOrderHeader soh ON sod.SalesOrderID = soh.SalesOrderID
+    WHERE 
+        soh.OrderDate BETWEEN @StartDate AND @EndDate
+    GROUP BY 
+        p.Name;
+END;
+
+
+
+EXEC GenerateSalesReport @StartDate = '2011-06-30', @EndDate = '2023-12-31';
+
+
+
+********************************************************************************************************************
+    Stwórz procedurę, która po dodaniu nowej dostawy aktualizuje stan magazynowy produktów w tabeli Production.ProductInventory.
+
+						$$$$$$$$ TO NIE DZIAŁA $$$$$$$$$$
+DROP PROCEDURE IF EXISTS UpdateMagazyn;
+
+USE AdventureWorks2019;
+GO
+
+CREATE PROCEDURE UpdateMagazyn
+    @DeliveryID INT
+AS
+BEGIN
+    UPDATE inv
+    SET inv.Quantity = inv.Quantity + d.Quantity
+    FROM Production.ProductInventory inv
+    INNER JOIN Production.ProductDocument d ON inv.ProductID = d.ProductID
+    WHERE d.DocumentID = @DeliveryID;
+END;
+
+
+********************************************************************************************************************
+
+Triggery:
+
+    Trigger automatycznie aktualizujący datę modyfikacji rekordu:
+        Stwórz trigger, który automatycznie aktualizuje datę modyfikacji rekordu w tabeli HumanResources.Employee za każdym razem, gdy zostanie zmieniony jakikolwiek rekord.
+
+
+DROP TRIGGER IF EXISTS UpdateModifiedDate;
+
+USE AdventureWorks2019;
+GO
+
+CREATE TRIGGER UpdateModifiedDate
+ON HumanResources.Employee
+
+AFTER UPDATE
+AS
+BEGIN
+
+    UPDATE HumanResources.Employee
+    SET ModifiedDate = GETDATE()
+    FROM HumanResources.Employee e
+    JOIN inserted i ON e.BusinessEntityID = i.BusinessEntityID;
+
+END;
+
+
+
+
+********************************************************************************************************************
+
+
+
+    Trigger sprawdzający poprawność danych podczas dodawania nowego produktu:
+        Stwórz trigger, który sprawdza poprawność danych podczas dodawania nowego produktu, np. czy cena produktu jest większa niż 0 i czy nazwa produktu jest unikalna.
+
+									
+								CZY DZIAŁA NIE WIEM
+DROP TRIGGER IF EXISTS SprawdzaniePoprawnosciProduktu;
+
+USE AdventureWorks2019;
+GO
+
+
+CREATE TRIGGER SprawdzaniePoprawnosciProduktu
+ON Production.Product
+AFTER INSERT
+
+AS
+BEGIN
+    DECLARE @Price DECIMAL(18, 2)
+    DECLARE @ProductName NVARCHAR(255)
+
+    SELECT @Price = ListPrice, @ProductName = Name
+    FROM inserted
+
+    IF @Price <= 0
+    BEGIN
+        RAISERROR ('Cena produktu musi być większa niż 0.', 16, 1)
+        ROLLBACK TRANSACTION
+        RETURN
+    END
+
+    IF EXISTS (SELECT 1 FROM Production.Product WHERE Name = @ProductName)
+    BEGIN
+        RAISERROR ('Nazwa produktu musi być unikalna.', 16, 1)
+        ROLLBACK TRANSACTION
+        RETURN
+    END
+END;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
