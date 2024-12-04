@@ -1,0 +1,91 @@
+-- Tworzenie nowej bazy danych
+CREATE DATABASE car_rental;
+
+-- Połączenie z bazą danych
+\c car_rental;
+
+-- Tworzenie schematu
+CREATE SCHEMA rental;
+
+-- Tworzenie tabel
+CREATE TABLE rental.customers (
+    customer_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone_number VARCHAR(15),
+    address TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE rental.cars (
+    car_id SERIAL PRIMARY KEY,
+    brand VARCHAR(50) NOT NULL,
+    model VARCHAR(50) NOT NULL,
+    year INT NOT NULL,
+    registration_number VARCHAR(20) UNIQUE NOT NULL,
+    status VARCHAR(20) DEFAULT 'available',
+    price_per_day NUMERIC(10, 2) NOT NULL
+);
+
+CREATE TABLE rental.reservations (
+    reservation_id SERIAL PRIMARY KEY,
+    customer_id INT REFERENCES rental.customers(customer_id) ON DELETE CASCADE,
+    car_id INT REFERENCES rental.cars(car_id) ON DELETE SET NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE rental.payments (
+    payment_id SERIAL PRIMARY KEY,
+    reservation_id INT REFERENCES rental.reservations(reservation_id) ON DELETE CASCADE,
+    amount NUMERIC(10, 2) NOT NULL,
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    payment_method VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE rental.employees (
+    employee_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone_number VARCHAR(15),
+    hire_date DATE NOT NULL,
+    position VARCHAR(50)
+);
+
+CREATE TABLE rental.maintenance (
+    maintenance_id SERIAL PRIMARY KEY,
+    car_id INT REFERENCES rental.cars(car_id) ON DELETE CASCADE,
+    maintenance_date DATE NOT NULL,
+    description TEXT NOT NULL,
+    cost NUMERIC(10, 2) NOT NULL
+);
+
+-- Tworzenie widoków
+CREATE VIEW rental.active_reservations AS
+SELECT 
+    r.reservation_id,
+    c.first_name || ' ' || c.last_name AS customer_name,
+    ca.brand || ' ' || ca.model AS car_details,
+    r.start_date,
+    r.end_date,
+    r.status
+FROM rental.reservations r
+JOIN rental.customers c ON r.customer_id = c.customer_id
+JOIN rental.cars ca ON r.car_id = ca.car_id
+WHERE r.status = 'active';
+
+CREATE VIEW rental.overdue_maintenance AS
+SELECT 
+    ca.car_id,
+    ca.brand,
+    ca.model,
+    MAX(m.maintenance_date) AS last_maintenance,
+    CURRENT_DATE - MAX(m.maintenance_date) AS days_since_last_maintenance
+FROM rental.cars ca
+LEFT JOIN rental.maintenance m ON ca.car_id = m.car_id
+GROUP BY ca.car_id, ca.brand, ca.model
+HAVING CURRENT_DATE - MAX(m.maintenance_date) > 365;
